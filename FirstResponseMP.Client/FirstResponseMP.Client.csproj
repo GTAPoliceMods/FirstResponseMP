@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net48</TargetFramework>
+    <OutputType>Library</OutputType>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <AssemblyName>$(MSBuildProjectName).net</AssemblyName>
+    <BaseOutputPath>../FirstResponseMP.Build/FirstResponseMP.Client/</BaseOutputPath>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+    <OutputPath>../FirstResponseMP.Build/FirstResponseMP.Client/</OutputPath>
+    <Configurations>Release;Debug</Configurations>
+    <Platforms>AnyCPU</Platforms>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FirstResponseMP.Shared\FirstResponseMP.Shared.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="CitizenFX.Core.Client" Version="1.0.10230" />
+    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+    <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
+  </ItemGroup>
+</Project>
