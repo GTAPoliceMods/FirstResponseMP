@@ -23,6 +23,7 @@
     <PackageReference Include="CitizenFX.Core.Server" Version="1.0.10230" />
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
     <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
+    <PackageReference Include="System.Net.Http" Version="4.3.4" />
   </ItemGroup>
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
     <Exec Command="xcopy &quot;$(OutDir)Static\**.*&quot; &quot;$(OutDir)..&quot; /E /H /Y" />

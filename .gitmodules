@@ -1,0 +1,3 @@
+[submodule "FirstResponseMP.Interface"]
+	path = FirstResponseMP.Interface
+	url = https://github.com/GTAPoliceMods/FirstResponseMP.Interface.git
