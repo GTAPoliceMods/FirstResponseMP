@@ -3,3 +3,4 @@ obj/
 /packages/
 /.vs
 /FirstResponseMP.Build
+/FirstResponseMP.Statistics/Build (INTERNAL USE)
