@@ -1,9 +1,0 @@
-<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-
-  <!-- Define a target that runs after all projects have been built -->
-  <Target Name="PostBuildAllProjects" AfterTargets="Build">
-    <Message Text="First Response MP has been built. Zipping up now!" Importance="high" />
-    <Exec Command="powershell -Command &quot;Compress-Archive -Path '$(SolutionDir)FirstResponseMP.Build\*' -DestinationPath '$(SolutionDir)FirstResponseMP.Build\frmp_core.zip' -Force&quot;" />
-  </Target>
-
-</Project>
