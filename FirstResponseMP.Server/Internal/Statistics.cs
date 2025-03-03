@@ -20,8 +20,8 @@ namespace FirstResponseMP.Server.Internal
 
         public async Task OnStatisticsTick()
         {
-            HttpClient httpClient = new HttpClient();
-            await httpClient.PostAsync("https://example.com/api/statistics", new StringContent($"{{'serverHost': '{Dns.GetHostName()}', 'onlinePlayers': 32, 'ondutyPlayers': 10}}"));
+            //HttpClient httpClient = new HttpClient();
+            //await httpClient.PostAsync("https://example.com/api/statistics", new StringContent($"{{'serverHost': '{Dns.GetHostName()}', 'onlinePlayers': 32, 'ondutyPlayers': 10}}"));
             await Task.Delay(5000);
         }
     }

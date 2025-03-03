@@ -12,8 +12,10 @@ shared_script 'FirstResponseMP.Shared/FirstResponseMP.Shared.net.dll'
 
 files {
     'FirstResponseMP.Client/**/*',
+    'FirstResponseMP.Callouts/**/*',
     'FirstResponseMP.Shared/**/*',
     'FirstResponseMP.Interface/**/*',
     'FirstResponseMP.Localization/**/*',
-	'FirstResponseMP.Config/**/*'
+	'FirstResponseMP.Config/**/*',
+	'stream/**/*'
 }

@@ -12,6 +12,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Build %28INTERNAL USE%29\**" />
+    <EmbeddedResource Remove="Build %28INTERNAL USE%29\**" />
+    <None Remove="Build %28INTERNAL USE%29\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="assets\statistics_temp.png" />
     <None Remove="assets\trebuc.ttf" />
   </ItemGroup>
@@ -33,6 +39,12 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="SixLabors.ImageSharp" Version="3.1.6" />
     <PackageReference Include="SixLabors.ImageSharp.Drawing" Version="2.1.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\FirstResponseMP.Server\Static\FirstResponseMP.Client\Newtonsoft.Json.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

@@ -25,6 +25,11 @@
     <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
     <PackageReference Include="System.Net.Http" Version="4.3.4" />
   </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>Static\FirstResponseMP.Client\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+  </ItemGroup>
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
     <Exec Command="xcopy &quot;$(OutDir)Static\**.*&quot; &quot;$(OutDir)..&quot; /E /H /Y" />
     <Exec Command="rmdir /S /Q &quot;$(OutDir)Static\&quot;" />
