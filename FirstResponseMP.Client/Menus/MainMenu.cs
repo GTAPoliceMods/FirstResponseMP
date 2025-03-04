@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 using CitizenFX.Core;
 using CitizenFX.Core.Native;
 
+using FirstResponseMP.Client.MenuItems;
+using FirstResponseMP.Shared.Enums;
+
 using ScaleformUI.Elements;
 using ScaleformUI.Menu;
 
@@ -15,35 +18,32 @@ namespace FirstResponseMP.Client.Menus
 {
     public class MainMenu : MenuBase
     {
-        public static UIMenu mainMenu;
+        internal static UIMenu mainMenu;
 
-        public MainMenu()
+        public MainMenu(string _UnitName, string _UnitStatus, string _UnitDivision)
         {
-            mainMenu = new UIMenu(" ", "~b~Main Menu~s~", new PointF(376, 50), frmp_txds, frmp_txns, true, true, MenuAlignment.RIGHT);
+            mainMenu = new MenuHead("~b~Main Menu~s~", frmp_txds, frmp_txns).Init();
 
-            CreateMenu(mainMenu);
-        }
+            UIMenuDetailsWindow currentStats = new UIMenuDetailsWindow($"{_UnitName}", $"Current Status: {(_UnitStatus == "On Duty" ? "~g~On Duty~s~" : "~r~Off Duty~s~")}\nCurrent Division: {(_UnitDivision == "Law Enforcement" ? "~b~Law Enforcement~s~" : _UnitDivision == "Medical Service" ? "~g~Medical Service~s~" : _UnitDivision == "Fire & Emergency" ? "~r~Fire & Emergency~s~" : "")}", "");
 
-        public override void CreateMenu(UIMenu menu)
-        {
-            UIMenuItem currentDutyStatus = new UIMenuItem("Current Status:", "Your current unit status.");
-            currentDutyStatus.SetRightLabel("~g~On Duty~s~");
-            currentDutyStatus.Enabled = false;
-
-            UIMenuItem currentDivision = new UIMenuItem("Current Division:", "Your current unit division.");
+            UIMenuSeparatorItem currentDivision = new UIMenuSeparatorItem("Current Division:", true);
             currentDivision.SetRightLabel("~b~Law Enforcement~s~");
             currentDivision.Enabled = false;
 
-            UIMenuItem changeDutyStatus = new UIMenuItem("Change Status", "Change your current unit statuc.");
+            UIMenuItem changeDutyStatus = new UIMenuListItem("Change Status", UnitDutyStatus.Values, UnitDutyStatus.Values.IndexOf(_UnitStatus));
             changeDutyStatus.SetRightLabel(">>>");
 
-            UIMenuItem changeDivision = new UIMenuItem("Change Division", "Change your current unit division.");
+            UIMenuItem changeDivision = new UIMenuListItem("Change Division", UnitDivision.Values, UnitDivision.Values.IndexOf(_UnitDivision));
             changeDivision.SetRightLabel(">>>");
 
-            menu.AddItem(currentDutyStatus);
-            menu.AddItem(currentDivision);
-            menu.AddItem(changeDutyStatus);
-            menu.AddItem(changeDivision);
+            mainMenu.AddWindow(currentStats);
+            mainMenu.AddItem(changeDutyStatus);
+            mainMenu.AddItem(changeDivision);
+        }
+
+        public static UIMenu Menu()
+        {
+            return mainMenu;
         }
     }
 }

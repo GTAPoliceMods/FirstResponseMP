@@ -8,6 +8,7 @@ using CitizenFX.Core;
 using CitizenFX.Core.Native;
 
 using FirstResponseMP.Client.Menus;
+using FirstResponseMP.Shared.Enums;
 
 using ScaleformUI.Menu;
 
@@ -15,8 +16,12 @@ namespace FirstResponseMP.Client
 {
     public class Main : BaseScript
     {
+        public static MenuAlign MenuAlign = MenuAlign.Left;
+
         public Main()
         {
+            _ = new MainMenu();
+
             Debug.WriteLine("FirstResponseMP.Client loaded.");
 
             API.RegisterKeyMapping("frmp_core:ToggleMenu", "Toggle FRMP Menu", "keyboard", "F6");
@@ -28,11 +33,11 @@ namespace FirstResponseMP.Client
         {
             if (ScaleformUI.MenuHandler.CurrentMenu != null)
             {
-                ScaleformUI.MenuHandler.CurrentMenu.Visible ^= ScaleformUI.MenuHandler.CurrentMenu.Visible;
+                ScaleformUI.MenuHandler.CurrentMenu.Visible = !ScaleformUI.MenuHandler.CurrentMenu.Visible;
             }
             else
             {
-                MainMenu.mainMenu.Visible = true;
+                MainMenu.Menu().Visible = true;
             }
         });
     }
