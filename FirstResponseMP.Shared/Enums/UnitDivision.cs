@@ -10,9 +10,9 @@ namespace FirstResponseMP.Shared.Enums
     {
         public static readonly List<dynamic> Values = new List<dynamic>
         {
-            "Law Enforcement",
-            "Medical Service",
-            "Fire and Emergency"
+            "Police",
+            "Medical",
+            "Fire"
         };
     }
 }

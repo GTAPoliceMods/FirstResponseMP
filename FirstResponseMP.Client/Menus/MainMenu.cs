@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using CitizenFX.Core;
 using CitizenFX.Core.Native;
 
+using FirstResponseMP.Client.Functions;
 using FirstResponseMP.Client.MenuItems;
 using FirstResponseMP.Shared.Enums;
 
@@ -20,25 +21,51 @@ namespace FirstResponseMP.Client.Menus
     {
         internal static UIMenu mainMenu;
 
-        public MainMenu(string _UnitName, string _UnitStatus, string _UnitDivision)
+        public MainMenu()
         {
-            mainMenu = new MenuHead("~b~Main Menu~s~", frmp_txds, frmp_txns).Init();
+            mainMenu = new MenuHead("~b~Main Menu~s~", frmp_txd, frmp_txn_banner).Init();
 
-            UIMenuDetailsWindow currentStats = new UIMenuDetailsWindow($"{_UnitName}", $"Current Status: {(_UnitStatus == "On Duty" ? "~g~On Duty~s~" : "~r~Off Duty~s~")}\nCurrent Division: {(_UnitDivision == "Law Enforcement" ? "~b~Law Enforcement~s~" : _UnitDivision == "Medical Service" ? "~g~Medical Service~s~" : _UnitDivision == "Fire & Emergency" ? "~r~Fire & Emergency~s~" : "")}", "");
+            UIMenuDetailsWindow currentStats = new UIMenuDetailsWindow(
+                $"{UnitFunctions.PlayerUnit.Name}", 
+                $"Current Status: {(UnitFunctions.PlayerUnit.Status == "On Duty" ? "~g~On Duty~s~" : "~r~Off Duty~s~")}", 
+                $"Current Division: {(UnitFunctions.PlayerUnit.Division == "Police" ? "~b~Police~s~" : UnitFunctions.PlayerUnit.Division == "Medical" ? "~g~Medical~s~" : UnitFunctions.PlayerUnit.Division == "Fire" ? "~r~Fire~s~" : "")}",
+                (UnitFunctions.PlayerUnit.Division == "Police" ? frmp_detail_leo : UnitFunctions.PlayerUnit.Division == "Medical" ? frmp_detail_ems : UnitFunctions.PlayerUnit.Division == "Fire" ? frmp_detail_fire : frmp_detail_blank)
+            );
 
-            UIMenuSeparatorItem currentDivision = new UIMenuSeparatorItem("Current Division:", true);
-            currentDivision.SetRightLabel("~b~Law Enforcement~s~");
-            currentDivision.Enabled = false;
+            UIMenuItem changeDutyStatus = new UIMenuListItem("Change Status", UnitDutyStatus.Values, UnitDutyStatus.Values.IndexOf(UnitFunctions.PlayerUnit.Status));
 
-            UIMenuItem changeDutyStatus = new UIMenuListItem("Change Status", UnitDutyStatus.Values, UnitDutyStatus.Values.IndexOf(_UnitStatus));
-            changeDutyStatus.SetRightLabel(">>>");
-
-            UIMenuItem changeDivision = new UIMenuListItem("Change Division", UnitDivision.Values, UnitDivision.Values.IndexOf(_UnitDivision));
-            changeDivision.SetRightLabel(">>>");
+            UIMenuItem changeDivision = new UIMenuListItem("Change Division", UnitDivision.Values, UnitDivision.Values.IndexOf(UnitFunctions.PlayerUnit.Division));
 
             mainMenu.AddWindow(currentStats);
             mainMenu.AddItem(changeDutyStatus);
             mainMenu.AddItem(changeDivision);
+
+            mainMenu.OnListSelect += (sender, item, itemIndex) =>
+            {
+                if (item == changeDutyStatus)
+                {
+                    var status = UnitDutyStatus.Values[itemIndex];
+                    UnitFunctions.PlayerUnit.Status = status;
+                    mainMenu.Visible = false;
+                    mainMenu.Clear();
+                    _ = new MainMenu();
+                    mainMenu.Visible = true;
+                    mainMenu.CurrentItem = item;
+                }
+                else if (item == changeDivision)
+                {
+                    int oldIndex = itemIndex;
+
+                    var division = UnitDivision.Values[itemIndex];
+                    UnitFunctions.SetPlayerUnitDivision(division);
+                    UnitFunctions.PlayerUnit.Division = division;
+                    mainMenu.Visible = false;
+                    mainMenu.Clear();
+                    _ = new MainMenu();
+                    mainMenu.Visible = true;
+                    mainMenu.CurrentItem = item;
+                }
+            };
         }
 
         public static UIMenu Menu()
