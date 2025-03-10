@@ -34,6 +34,7 @@ namespace FirstResponseMP.Client.Functions
         {
             public static void CreateAll()
             {
+                _ = new MenuBase();
                 _ = new MainMenu();
             }
         }

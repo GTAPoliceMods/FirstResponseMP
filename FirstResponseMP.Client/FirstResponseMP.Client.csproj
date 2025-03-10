@@ -17,6 +17,7 @@
   <ItemGroup>
     <PackageReference Include="CitizenFX.Core.Client" Version="1.0.10230" />
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+    <PackageReference Include="RandomNameGeneratorLibrary" Version="1.2.2" />
     <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
   </ItemGroup>
   <ItemGroup>

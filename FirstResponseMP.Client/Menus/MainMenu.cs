@@ -25,11 +25,13 @@ namespace FirstResponseMP.Client.Menus
         {
             mainMenu = new MenuHead("~b~Main Menu~s~", frmp_txd, frmp_txn_banner).Init();
 
+            frmp_detail.Txn = UnitFunctions.PlayerUnit.Division == "Police" ? frmp_txn_leo : UnitFunctions.PlayerUnit.Division == "Medical" ? frmp_txn_ems : UnitFunctions.PlayerUnit.Division == "Fire" ? frmp_txn_fire : "";
+
             UIMenuDetailsWindow currentStats = new UIMenuDetailsWindow(
                 $"{UnitFunctions.PlayerUnit.Name}", 
                 $"Current Status: {(UnitFunctions.PlayerUnit.Status == "On Duty" ? "~g~On Duty~s~" : "~r~Off Duty~s~")}", 
                 $"Current Division: {(UnitFunctions.PlayerUnit.Division == "Police" ? "~b~Police~s~" : UnitFunctions.PlayerUnit.Division == "Medical" ? "~g~Medical~s~" : UnitFunctions.PlayerUnit.Division == "Fire" ? "~r~Fire~s~" : "")}",
-                (UnitFunctions.PlayerUnit.Division == "Police" ? frmp_detail_leo : UnitFunctions.PlayerUnit.Division == "Medical" ? frmp_detail_ems : UnitFunctions.PlayerUnit.Division == "Fire" ? frmp_detail_fire : frmp_detail_blank)
+                frmp_detail
             );
 
             UIMenuItem changeDutyStatus = new UIMenuListItem("Change Status", UnitDutyStatus.Values, UnitDutyStatus.Values.IndexOf(UnitFunctions.PlayerUnit.Status));
