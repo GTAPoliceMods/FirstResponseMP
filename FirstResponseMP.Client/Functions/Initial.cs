@@ -18,11 +18,13 @@ namespace FirstResponseMP.Client.Functions
         {
             public static void LoadInfo()
             {
+                var _rank = UnitFunctions.GetPlayerUnitRank();
                 var _name = UnitFunctions.GetPlayerUnitName();
                 var _division = UnitFunctions.GetPlayerUnitDivision();
 
                 UnitFunctions.PlayerUnit = new PlayerUnit()
                 {
+                    Rank = _rank,
                     Name = _name,
                     Status = "Off Duty",
                     Division = _division
@@ -36,6 +38,7 @@ namespace FirstResponseMP.Client.Functions
             {
                 _ = new MenuBase();
                 _ = new MainMenu();
+                _ = new ChangeRankOrNameMenu();
             }
         }
 

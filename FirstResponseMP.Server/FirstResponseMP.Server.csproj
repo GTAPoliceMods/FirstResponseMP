@@ -4,10 +4,10 @@
     <OutputType>Library</OutputType>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <AssemblyName>$(MSBuildProjectName).net</AssemblyName>
-    <BaseOutputPath>../FirstResponseMP.Build/FirstResponseMP.Server/</BaseOutputPath>
+    <BaseOutputPath>../FirstResponseMP.Build/frmp_core/FirstResponseMP.Server/</BaseOutputPath>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
-    <OutputPath>../FirstResponseMP.Build/FirstResponseMP.Server/</OutputPath>
+    <OutputPath>../FirstResponseMP.Build/frmp_core/FirstResponseMP.Server/</OutputPath>
     <Configurations>Release;Debug</Configurations>
     <Platforms>AnyCPU</Platforms>
   </PropertyGroup>
@@ -31,7 +31,10 @@
     </Reference>
   </ItemGroup>
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="xcopy &quot;$(OutDir)Static\frmp_assets\**.*&quot; &quot;$(OutDir)..\..\frmp_assets\&quot; /E /H /Y" />
+    <Exec Command="rmdir /S /Q &quot;$(OutDir)Static\frmp_assets\&quot;" />
     <Exec Command="xcopy &quot;$(OutDir)Static\**.*&quot; &quot;$(OutDir)..&quot; /E /H /Y" />
     <Exec Command="rmdir /S /Q &quot;$(OutDir)Static\&quot;" />
+    
   </Target>
 </Project>

@@ -12,6 +12,7 @@ using FirstResponseMP.Client.Functions;
 using FirstResponseMP.Client.MenuItems;
 using FirstResponseMP.Shared.Enums;
 
+using ScaleformUI;
 using ScaleformUI.Elements;
 using ScaleformUI.Menu;
 
@@ -19,16 +20,18 @@ namespace FirstResponseMP.Client.Menus
 {
     public class MainMenu : MenuBase
     {
-        internal static UIMenu mainMenu;
+        public MenuFunctions MenuFunctions = new MenuFunctions();
+
+        private static UIMenu menu;
 
         public MainMenu()
         {
-            mainMenu = new MenuHead("~b~Main Menu~s~", frmp_txd, frmp_txn_banner).Init();
+            menu = new MenuHead("~b~Main Menu~s~", frmp_txd, frmp_txn_banner).Init();
 
             frmp_detail.Txn = UnitFunctions.PlayerUnit.Division == "Police" ? frmp_txn_leo : UnitFunctions.PlayerUnit.Division == "Medical" ? frmp_txn_ems : UnitFunctions.PlayerUnit.Division == "Fire" ? frmp_txn_fire : "";
 
             UIMenuDetailsWindow currentStats = new UIMenuDetailsWindow(
-                $"{UnitFunctions.PlayerUnit.Name}", 
+                $"{UnitFunctions.PlayerUnit.Rank} {UnitFunctions.PlayerUnit.Name}", 
                 $"Current Status: {(UnitFunctions.PlayerUnit.Status == "On Duty" ? "~g~On Duty~s~" : "~r~Off Duty~s~")}", 
                 $"Current Division: {(UnitFunctions.PlayerUnit.Division == "Police" ? "~b~Police~s~" : UnitFunctions.PlayerUnit.Division == "Medical" ? "~g~Medical~s~" : UnitFunctions.PlayerUnit.Division == "Fire" ? "~r~Fire~s~" : "")}",
                 frmp_detail
@@ -38,21 +41,28 @@ namespace FirstResponseMP.Client.Menus
 
             UIMenuItem changeDivision = new UIMenuListItem("Change Division", UnitDivision.Values, UnitDivision.Values.IndexOf(UnitFunctions.PlayerUnit.Division));
 
-            mainMenu.AddWindow(currentStats);
-            mainMenu.AddItem(changeDutyStatus);
-            mainMenu.AddItem(changeDivision);
+            UIMenuItem changeRankOrName = new UIMenuItem("Change Rank/Name", "Change your unit Rank or Name");
+            changeRankOrName.SetRightLabel(">>>");
 
-            mainMenu.OnListSelect += (sender, item, itemIndex) =>
+            menu.AddWindow(currentStats);
+            menu.AddItem(changeDutyStatus);
+            menu.AddItem(changeDivision);
+            menu.AddItem(changeRankOrName);
+
+            changeRankOrName.Activated += (sender, i) =>
+            {
+                sender.SwitchTo(ChangeRankOrNameMenu.Menu(), inheritOldMenuParams: true);
+            };
+
+            menu.OnListSelect += (sender, item, itemIndex) =>
             {
                 if (item == changeDutyStatus)
                 {
                     var status = UnitDutyStatus.Values[itemIndex];
-                    UnitFunctions.PlayerUnit.Status = status;
-                    mainMenu.Visible = false;
-                    mainMenu.Clear();
-                    _ = new MainMenu();
-                    mainMenu.Visible = true;
-                    mainMenu.CurrentItem = item;
+                    UnitFunctions.SetPlayerUnitStatus(status);
+                    UnitFunctions.UpdatePlayerUnitObject();
+
+                    MenuFunctions.RestartMenu(Menu(), true);
                 }
                 else if (item == changeDivision)
                 {
@@ -60,19 +70,16 @@ namespace FirstResponseMP.Client.Menus
 
                     var division = UnitDivision.Values[itemIndex];
                     UnitFunctions.SetPlayerUnitDivision(division);
-                    UnitFunctions.PlayerUnit.Division = division;
-                    mainMenu.Visible = false;
-                    mainMenu.Clear();
-                    _ = new MainMenu();
-                    mainMenu.Visible = true;
-                    mainMenu.CurrentItem = item;
+                    UnitFunctions.UpdatePlayerUnitObject();
+
+                    MenuFunctions.RestartMenu(Menu(), true);
                 }
             };
         }
 
         public static UIMenu Menu()
         {
-            return mainMenu;
+            return menu;
         }
     }
 }

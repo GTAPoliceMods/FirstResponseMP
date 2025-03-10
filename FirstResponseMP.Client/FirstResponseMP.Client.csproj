@@ -4,10 +4,10 @@
     <OutputType>Library</OutputType>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <AssemblyName>$(MSBuildProjectName).net</AssemblyName>
-    <BaseOutputPath>../FirstResponseMP.Build/FirstResponseMP.Client/</BaseOutputPath>
+    <BaseOutputPath>../FirstResponseMP.Build/frmp_core/FirstResponseMP.Client/</BaseOutputPath>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
-    <OutputPath>../FirstResponseMP.Build/FirstResponseMP.Client/</OutputPath>
+    <OutputPath>../FirstResponseMP.Build/frmp_core/FirstResponseMP.Client/</OutputPath>
     <Configurations>Release;Debug</Configurations>
     <Platforms>AnyCPU</Platforms>
   </PropertyGroup>
@@ -27,5 +27,6 @@
     <Reference Include="ScaleformUI">
       <HintPath>..\FirstResponseMP.Server\Static\FirstResponseMP.Client\ScaleformUI.dll</HintPath>
     </Reference>
+    <Reference Include="System.Net.Http" />
   </ItemGroup>
 </Project>
