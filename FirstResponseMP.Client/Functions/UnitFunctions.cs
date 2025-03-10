@@ -18,6 +18,8 @@ namespace FirstResponseMP.Client.Functions
     {
         public static PlayerUnit PlayerUnit;
 
+        public static readonly string CustomNamesFileUrl = "https://frmp-ui.gtapolicemods.com/data/customnames.json";
+
         public static string GetPlayerUnitName()
         {
             if (API.GetResourceKvpString(KvpStrings.KVP_PlayerUnitName) == null)
