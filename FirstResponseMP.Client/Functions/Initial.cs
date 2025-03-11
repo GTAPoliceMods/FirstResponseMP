@@ -8,6 +8,7 @@ using CitizenFX.Core;
 using CitizenFX.Core.Native;
 
 using FirstResponseMP.Client.Menus;
+using FirstResponseMP.Client.Menus.Custom;
 using FirstResponseMP.Shared.Objects;
 
 namespace FirstResponseMP.Client.Functions
@@ -36,9 +37,9 @@ namespace FirstResponseMP.Client.Functions
         {
             public static void CreateAll()
             {
-                _ = new MenuBase();
-                _ = new MainMenu();
                 _ = new ChangeRankOrNameMenu();
+
+                _ = new MainMenu();
             }
         }
 

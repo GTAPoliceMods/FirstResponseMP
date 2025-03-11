@@ -100,17 +100,15 @@ namespace FirstResponseMP.Client.Functions
             API.SetResourceKvp(KvpStrings.KVP_PlayerUnitRank, $"{_playerUnitRank}");
         }
 
-        public static async void SetPlayerUnitName(string _playerUnitName = null)
+        public static void SetPlayerUnitName(string _playerUnitName = null)
         {
             if (_playerUnitName == null)
             {
                 var randomChance = new Random();
 
-                await Task.Delay(100);
-
                 if (randomChance.Next(1, 501) == 1)
                 {
-                    var randomName = await GetRandomCustomName();
+                    var randomName = GetRandomCustomName().GetAwaiter().GetResult();
 
                     _playerUnitName = $"{randomName}";
                 }

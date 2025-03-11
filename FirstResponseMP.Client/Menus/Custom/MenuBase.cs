@@ -6,20 +6,19 @@ using System.Text;
 using System.Threading.Tasks;
 
 using CitizenFX.Core;
-using CitizenFX.Core.Native;
 
 using ScaleformUI.Menu;
 
-namespace FirstResponseMP.Client.Menus
+namespace FirstResponseMP.Client.Menus.Custom
 {
-    public class MenuBase
+    public class MenuBase : BaseScript
     {
-        public static string frmp_txd = "frmp_core";
+        public readonly static string frmp_txd = "frmp_core";
 
-        public static string frmp_txn_banner = "menu_banner";
-        public static string frmp_txn_leo = "leo_icon";
-        public static string frmp_txn_fire = "fire_icon";
-        public static string frmp_txn_ems = "ems_icon";
+        public readonly static string frmp_txn_banner = "menu_banner";
+        public readonly static string frmp_txn_leo = "leo_icon";
+        public readonly static string frmp_txn_fire = "fire_icon";
+        public readonly static string frmp_txn_ems = "ems_icon";
 
         public static UIDetailImage frmp_detail = new UIDetailImage()
         {

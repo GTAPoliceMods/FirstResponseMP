@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 using FirstResponseMP.Client.Functions;
 using FirstResponseMP.Client.MenuItems;
+using FirstResponseMP.Client.Menus.Custom;
 using FirstResponseMP.Shared.Enums;
 
 using ScaleformUI;
@@ -15,13 +16,11 @@ namespace FirstResponseMP.Client.Menus
 {
     public class ChangeRankOrNameMenu : MenuBase
     {
-        public MenuFunctions MenuFunctions = new MenuFunctions();
-
         private static UIMenu menu;
 
         public ChangeRankOrNameMenu()
         {
-            menu = new MenuHead("~b~Change Rank/Name~s~", frmp_txd, frmp_txn_banner).Init();
+            menu = new MenuHead("Change Rank/Name", frmp_txd, frmp_txn_banner).Init();
 
             frmp_detail.Txn = UnitFunctions.PlayerUnit.Division == "Police" ? frmp_txn_leo : UnitFunctions.PlayerUnit.Division == "Medical" ? frmp_txn_ems : UnitFunctions.PlayerUnit.Division == "Fire" ? frmp_txn_fire : "";
 
@@ -34,26 +33,17 @@ namespace FirstResponseMP.Client.Menus
 
             UIMenuItem changeUnitRank = new UIMenuListItem("Change Rank", UnitRank.Values, UnitRank.Values.IndexOf(UnitFunctions.PlayerUnit.Rank));
 
-            UIMenuItem setCustomUnitName = new UIMenuItem("Set Custom Name", "Set your unit name (Custom)");
-            UIMenuItem generateRandomUnitName = new UIMenuItem("Generate Random Name", "Set your unit name (Random)");
+            List<dynamic> ChangeNameValues = new List<dynamic>
+            {
+                "Custom",
+                "Random"
+            };
+
+            UIMenuItem changeUnitName = new UIMenuListItem("Change Name", ChangeNameValues, 0);
 
             menu.AddWindow(currentStats);
             menu.AddItem(changeUnitRank);
-            menu.AddItem(setCustomUnitName);
-            menu.AddItem(generateRandomUnitName);
-
-            setCustomUnitName.Activated += (sender, i) =>
-            {
-                SetCustomUnitName();
-            };
-
-            generateRandomUnitName.Activated += (sender, i) =>
-            {
-                UnitFunctions.SetPlayerUnitName();
-                UnitFunctions.UpdatePlayerUnitObject();
-
-                MenuFunctions.RestartMenu(Menu(), false);
-            };
+            menu.AddItem(changeUnitName);
 
             menu.OnListSelect += (sender, item, itemIndex) =>
             {
@@ -63,12 +53,28 @@ namespace FirstResponseMP.Client.Menus
                     UnitFunctions.SetPlayerUnitRank(rank);
                     UnitFunctions.UpdatePlayerUnitObject();
 
-                    MenuFunctions.RestartMenu(Menu(), false);
+                    MenuFunctions.RestartMenu();
+                }
+                else if (item == changeUnitName)
+                {
+                    var type = ChangeNameValues[itemIndex];
+
+                    if (type == "Custom")
+                    {
+                        SetCustomUnitName(sender);
+                    }
+                    else
+                    {
+                        UnitFunctions.SetPlayerUnitName();
+                        UnitFunctions.UpdatePlayerUnitObject();
+
+                        MenuFunctions.RestartMenu();
+                    }
                 }
             };
         }
 
-        public async void SetCustomUnitName()
+        public static async void SetCustomUnitName(UIMenu sender)
         {
             var customName = await OverlayFunctions.GetUserInput(windowTitle: "Enter Custom Name");
 
@@ -77,7 +83,7 @@ namespace FirstResponseMP.Client.Menus
                 UnitFunctions.SetPlayerUnitName(customName);
                 UnitFunctions.UpdatePlayerUnitObject();
 
-                MenuFunctions.RestartMenu(Menu(), false);
+                MenuFunctions.RestartMenu();
             }
             else
             {

@@ -24,7 +24,7 @@ namespace FirstResponseMP.Client.MenuItems
 
         public UIMenu Init()
         {
-            var menu = new UIMenu("", MenuDescription, GetMenuOffset(), MenuBannerTxd, MenuBannerTxn, true, true);
+            var menu = new UIMenu("", $"~b~{MenuDescription}~s~", GetMenuOffset(), MenuBannerTxd, MenuBannerTxn, true, true);
 
             menu.SetMouse(false, false, false, false, true);
 

@@ -10,33 +10,25 @@ using FirstResponseMP.Client.Menus;
 
 using ScaleformUI;
 using ScaleformUI.Menu;
+using ScaleformUI.Menus;
 
 namespace FirstResponseMP.Client.Functions
 {
     public class MenuFunctions : BaseScript
     {
-        public async void RestartMenu(UIMenu menu, bool isMainMenu)
+        public static void RestartMenu()
         {
-            Debug.WriteLine("[DEBUG] Restarting Now");
-
-            await Task.Delay(0);
-
-            menu.Visible = false; Debug.WriteLine("[DEBUG] Menu Hidden");
-            menu.Clear(); Debug.WriteLine("[DEBUG] Menu Cleared");
-            Initial.Menus.CreateAll(); Debug.WriteLine("[DEBUG] Re-init Menus");
-            MainMenu.Menu().Visible = true; Debug.WriteLine("[DEBUG] Main Menu Visible");
-
-            await Task.Delay(500); Debug.WriteLine("[DEBUG] Wait");
-
-            if (!isMainMenu)
+            if (MenuHandler.CurrentMenu != null && MenuHandler.CurrentMenu.Visible)
             {
-                Debug.WriteLine("[DEBUG] Not Main Menu");
-                await MainMenu.Menu().SwitchTo(menu, menu.CurrentSelection, true); Debug.WriteLine("[DEBUG] Switched Menu");
+                MenuHandler.CurrentMenu.Visible = false;
+                MenuHandler.CloseAndClearHistory();
+                Initial.Menus.CreateAll();
+                MainMenu.Menu().Visible = true;
             }
             else
             {
-                Debug.WriteLine("[DEBUG] Is Main Menu");
-                MainMenu.Menu().CurrentSelection = menu.CurrentSelection; Debug.WriteLine("[DEBUG] Changed Selection");
+                MenuHandler.CloseAndClearHistory();
+                Initial.Menus.CreateAll();
             }
         }
     }

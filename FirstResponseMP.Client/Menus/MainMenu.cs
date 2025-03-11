@@ -10,6 +10,7 @@ using CitizenFX.Core.Native;
 
 using FirstResponseMP.Client.Functions;
 using FirstResponseMP.Client.MenuItems;
+using FirstResponseMP.Client.Menus.Custom;
 using FirstResponseMP.Shared.Enums;
 
 using ScaleformUI;
@@ -20,13 +21,11 @@ namespace FirstResponseMP.Client.Menus
 {
     public class MainMenu : MenuBase
     {
-        public MenuFunctions MenuFunctions = new MenuFunctions();
-
         private static UIMenu menu;
 
         public MainMenu()
         {
-            menu = new MenuHead("~b~Main Menu~s~", frmp_txd, frmp_txn_banner).Init();
+            menu = new MenuHead("Main Menu", frmp_txd, frmp_txn_banner).Init();
 
             frmp_detail.Txn = UnitFunctions.PlayerUnit.Division == "Police" ? frmp_txn_leo : UnitFunctions.PlayerUnit.Division == "Medical" ? frmp_txn_ems : UnitFunctions.PlayerUnit.Division == "Fire" ? frmp_txn_fire : "";
 
@@ -62,7 +61,7 @@ namespace FirstResponseMP.Client.Menus
                     UnitFunctions.SetPlayerUnitStatus(status);
                     UnitFunctions.UpdatePlayerUnitObject();
 
-                    MenuFunctions.RestartMenu(Menu(), true);
+                    MenuFunctions.RestartMenu();
                 }
                 else if (item == changeDivision)
                 {
@@ -72,7 +71,7 @@ namespace FirstResponseMP.Client.Menus
                     UnitFunctions.SetPlayerUnitDivision(division);
                     UnitFunctions.UpdatePlayerUnitObject();
 
-                    MenuFunctions.RestartMenu(Menu(), true);
+                    MenuFunctions.RestartMenu();
                 }
             };
         }

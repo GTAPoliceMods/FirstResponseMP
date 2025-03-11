@@ -8,8 +8,8 @@
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
     <OutputPath>../FirstResponseMP.Build/frmp_core/FirstResponseMP.Server/</OutputPath>
-    <Configurations>Release;Debug</Configurations>
-    <Platforms>AnyCPU</Platforms>
+    <Configurations>Release</Configurations>
+    <Platforms>x64</Platforms>
   </PropertyGroup>
   <ItemGroup>
     <Content Include="Static\**\*">
@@ -23,12 +23,12 @@
     <PackageReference Include="CitizenFX.Core.Server" Version="1.0.10230" />
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
     <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
-    <PackageReference Include="System.Net.Http" Version="4.3.4" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json">
       <HintPath>Static\FirstResponseMP.Client\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="System.Net.Http" />
   </ItemGroup>
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
     <Exec Command="xcopy &quot;$(OutDir)Static\frmp_assets\**.*&quot; &quot;$(OutDir)..\..\frmp_assets\&quot; /E /H /Y" />
