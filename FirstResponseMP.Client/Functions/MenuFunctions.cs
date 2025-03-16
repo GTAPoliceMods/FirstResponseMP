@@ -6,29 +6,28 @@ using System.Threading.Tasks;
 
 using CitizenFX.Core;
 
-using FirstResponseMP.Client.Menus;
-
 using ScaleformUI;
 using ScaleformUI.Menu;
-using ScaleformUI.Menus;
 
 namespace FirstResponseMP.Client.Functions
 {
     public class MenuFunctions : BaseScript
     {
-        public static void RestartMenu()
+        public static void RestartMenu(UIMenu currentMenu)
         {
-            if (MenuHandler.CurrentMenu != null && MenuHandler.CurrentMenu.Visible)
+            MenuHandler.CurrentMenu.Visible = false;
+            MenuHandler.CloseAndClearHistory();
+            Initial.Menus.CreateAll();
+
+            Initial.Menus.MainMenu.Menu().Visible = true;
+
+            if (!currentMenu.Subtitle.Contains("Main Menu"))
             {
-                MenuHandler.CurrentMenu.Visible = false;
-                MenuHandler.CloseAndClearHistory();
-                Initial.Menus.CreateAll();
-                MainMenu.Menu().Visible = true;
+                Initial.Menus.MainMenu.Menu().SwitchTo(Initial.Menus.ChangeRankOrNameMenu.Menu(), currentMenu.CurrentSelection, false, null);
             }
             else
             {
-                MenuHandler.CloseAndClearHistory();
-                Initial.Menus.CreateAll();
+                Initial.Menus.MainMenu.Menu().CurrentSelection = currentMenu.CurrentSelection;
             }
         }
     }

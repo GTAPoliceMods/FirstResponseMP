@@ -16,7 +16,7 @@ namespace FirstResponseMP.Client.Menus
 {
     public class ChangeRankOrNameMenu : MenuBase
     {
-        private static UIMenu menu;
+        public override UIMenu menu { get; set; }
 
         public ChangeRankOrNameMenu()
         {
@@ -53,7 +53,7 @@ namespace FirstResponseMP.Client.Menus
                     UnitFunctions.SetPlayerUnitRank(rank);
                     UnitFunctions.UpdatePlayerUnitObject();
 
-                    MenuFunctions.RestartMenu();
+                    MenuFunctions.RestartMenu(sender);
                 }
                 else if (item == changeUnitName)
                 {
@@ -68,7 +68,7 @@ namespace FirstResponseMP.Client.Menus
                         UnitFunctions.SetPlayerUnitName();
                         UnitFunctions.UpdatePlayerUnitObject();
 
-                        MenuFunctions.RestartMenu();
+                        MenuFunctions.RestartMenu(sender);
                     }
                 }
             };
@@ -83,7 +83,7 @@ namespace FirstResponseMP.Client.Menus
                 UnitFunctions.SetPlayerUnitName(customName);
                 UnitFunctions.UpdatePlayerUnitObject();
 
-                MenuFunctions.RestartMenu();
+                MenuFunctions.RestartMenu(sender);
             }
             else
             {
@@ -91,7 +91,7 @@ namespace FirstResponseMP.Client.Menus
             }
         }
 
-        public static UIMenu Menu()
+        public override UIMenu Menu()
         {
             return menu;
         }

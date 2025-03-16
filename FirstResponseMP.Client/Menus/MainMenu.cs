@@ -21,7 +21,7 @@ namespace FirstResponseMP.Client.Menus
 {
     public class MainMenu : MenuBase
     {
-        private static UIMenu menu;
+        public override UIMenu menu { get; set; }
 
         public MainMenu()
         {
@@ -50,7 +50,7 @@ namespace FirstResponseMP.Client.Menus
 
             changeRankOrName.Activated += (sender, i) =>
             {
-                sender.SwitchTo(ChangeRankOrNameMenu.Menu(), inheritOldMenuParams: true);
+                sender.SwitchTo(Initial.Menus.ChangeRankOrNameMenu.Menu(), inheritOldMenuParams: true);
             };
 
             menu.OnListSelect += (sender, item, itemIndex) =>
@@ -61,7 +61,7 @@ namespace FirstResponseMP.Client.Menus
                     UnitFunctions.SetPlayerUnitStatus(status);
                     UnitFunctions.UpdatePlayerUnitObject();
 
-                    MenuFunctions.RestartMenu();
+                    MenuFunctions.RestartMenu(sender);
                 }
                 else if (item == changeDivision)
                 {
@@ -71,12 +71,12 @@ namespace FirstResponseMP.Client.Menus
                     UnitFunctions.SetPlayerUnitDivision(division);
                     UnitFunctions.UpdatePlayerUnitObject();
 
-                    MenuFunctions.RestartMenu();
+                    MenuFunctions.RestartMenu(sender);
                 }
             };
         }
 
-        public static UIMenu Menu()
+        public override UIMenu Menu()
         {
             return menu;
         }

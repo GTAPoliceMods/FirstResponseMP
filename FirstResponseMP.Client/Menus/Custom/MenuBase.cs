@@ -11,8 +11,10 @@ using ScaleformUI.Menu;
 
 namespace FirstResponseMP.Client.Menus.Custom
 {
-    public class MenuBase : BaseScript
+    public abstract class MenuBase : ScaleformUI.Menus.MenuBase
     {
+        public abstract UIMenu menu { get; set; }
+
         public readonly static string frmp_txd = "frmp_core";
 
         public readonly static string frmp_txn_banner = "menu_banner";
@@ -27,5 +29,7 @@ namespace FirstResponseMP.Client.Menus.Custom
             Size = new SizeF(60, 60),
             Pos = new PointF(30, 60),
         };
+
+        public abstract UIMenu Menu();
     }
 }

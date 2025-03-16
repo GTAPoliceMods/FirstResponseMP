@@ -11,6 +11,8 @@ using FirstResponseMP.Client.Menus;
 using FirstResponseMP.Client.Menus.Custom;
 using FirstResponseMP.Shared.Objects;
 
+using ScaleformUI.Menu;
+
 namespace FirstResponseMP.Client.Functions
 {
     public class Initial : BaseScript
@@ -35,11 +37,14 @@ namespace FirstResponseMP.Client.Functions
 
         public class Menus
         {
+            public static MenuBase ChangeRankOrNameMenu = null;
+            public static MenuBase MainMenu = null;
+
             public static void CreateAll()
             {
-                _ = new ChangeRankOrNameMenu();
+                ChangeRankOrNameMenu = new ChangeRankOrNameMenu();
 
-                _ = new MainMenu();
+                MainMenu = new MainMenu();
             }
         }
 

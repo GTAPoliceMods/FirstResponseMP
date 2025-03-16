@@ -20,7 +20,7 @@ namespace FirstResponseMP.Client.Functions
             }
             else
             {
-                MainMenu.Menu().Visible = true;
+                Initial.Menus.MainMenu.Menu().Visible = true;
             }
         });
     }
