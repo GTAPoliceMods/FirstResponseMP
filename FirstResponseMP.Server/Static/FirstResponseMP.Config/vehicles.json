@@ -7,9 +7,16 @@
       "Extras": []
     }
   ],
-  "Ambulance": [
+  "Medical": [
     {
       "Model": "ambulance",
+      "Livery": 0,
+      "Extras": []
+    }
+  ],
+  "Fire": [
+    {
+      "Model": "firetruk",
       "Livery": 0,
       "Extras": []
     }

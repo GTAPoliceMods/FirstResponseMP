@@ -27,7 +27,7 @@ namespace FirstResponseMP.Client.Menus.Custom
             Txd = frmp_txd,
             Txn = "",
             Size = new SizeF(60, 60),
-            Pos = new PointF(30, 60),
+            Pos = new PointF(30, 15),
         };
 
         public abstract UIMenu Menu();

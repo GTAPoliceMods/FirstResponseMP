@@ -1,0 +1,68 @@
+﻿{
+	"Police": {
+		"Officer": {
+			"isDefault": true,
+			"isRestricted": false
+		},
+		"Sergeant": {
+			"isDefault": false,
+			"isRestricted": true
+		},
+		"Lieutenant": {
+			"isDefault": false,
+			"isRestricted": true
+		},
+		"Captain": {
+			"isDefault": false,
+			"isRestricted": true
+		},
+		"Chief": {
+			"isDefault": false,
+			"isRestricted": true
+		}
+	},
+	"Medical": {
+		"EMT": {
+			"isDefault": true,
+			"isRestricted": false
+		},
+		"Paramedic": {
+			"isDefault": false,
+			"isRestricted": true
+		},
+		"Lieutenant": {
+			"isDefault": false,
+			"isRestricted": true
+		},
+		"Captain": {
+			"isDefault": false,
+			"isRestricted": true
+		},
+		"Chief": {
+			"isDefault": false,
+			"isRestricted": true
+		}
+	},
+	"Fire": {
+		"Firefighter": {
+			"isDefault": true,
+			"isRestricted": false
+		},
+		"Engineer": {
+			"isDefault": false,
+			"isRestricted": true
+		},
+		"Lieutenant": {
+			"isDefault": false,
+			"isRestricted": true
+		},
+		"Captain": {
+			"isDefault": false,
+			"isRestricted": true
+		},
+		"Chief": {
+			"isDefault": false,
+			"isRestricted": true
+		}
+	}
+}

@@ -43,10 +43,14 @@ namespace FirstResponseMP.Client.Menus
             UIMenuItem changeRankOrName = new UIMenuItem("Change Rank/Name", "Change your unit Rank or Name");
             changeRankOrName.SetRightLabel(">>>");
 
+            UIMenuItem versionText = new UIMenuItem("~r~FR:MP Version~c~", $"FirstResponseMP Version");
+            versionText.SetRightLabel($"~b~v{API.GetResourceMetadata(API.GetCurrentResourceName(), "version", 0)}~c~");
+
             menu.AddWindow(currentStats);
             menu.AddItem(changeDutyStatus);
             menu.AddItem(changeDivision);
             menu.AddItem(changeRankOrName);
+            menu.AddItem(versionText);
 
             changeRankOrName.Activated += (sender, i) =>
             {
