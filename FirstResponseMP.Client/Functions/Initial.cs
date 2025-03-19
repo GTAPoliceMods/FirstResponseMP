@@ -7,11 +7,8 @@ using System.Threading.Tasks;
 using CitizenFX.Core;
 using CitizenFX.Core.Native;
 
-using FirstResponseMP.Client.Menus;
-using FirstResponseMP.Client.Menus.Custom;
+using FirstResponseMP.Client.InteractionMenus.Custom;
 using FirstResponseMP.Shared.Objects;
-
-using ScaleformUI.Menu;
 
 namespace FirstResponseMP.Client.Functions
 {
@@ -37,14 +34,16 @@ namespace FirstResponseMP.Client.Functions
 
         public class Menus
         {
-            public static MenuBase ChangeRankOrNameMenu = null;
-            public static MenuBase MainMenu = null;
+            public static MenuBaseFRMP UnitChangeRankOrNameMenu = null;
+            public static MenuBaseFRMP UnitMainMenu = null;
 
             public static void CreateAll()
             {
-                ChangeRankOrNameMenu = new ChangeRankOrNameMenu();
+                // Unit Menu //
+                UnitChangeRankOrNameMenu = new InteractionMenus.UnitMenu.ChangeRankOrNameMenu();
+                UnitMainMenu = new InteractionMenus.UnitMenu.MainMenu();
 
-                MainMenu = new MainMenu();
+                // Ped Radial Menu //
             }
         }
 
@@ -52,8 +51,8 @@ namespace FirstResponseMP.Client.Functions
         {
             public static void RegisterAll()
             {
-                API.RegisterKeyMapping("frmp_core:ToggleMenu", "Toggle FRMP Menu", "keyboard", "F6");
-                API.RegisterCommand("frmp_core:ToggleMenu", CommandInputs.ToggleMenuCommand, false);
+                API.RegisterKeyMapping("frmp_core:ToggleUnitMenu", "Toggle FRMP Menu", "keyboard", "F11");
+                API.RegisterCommand("frmp_core:ToggleUnitMenu", CommandInputs.ToggleToggleUnitMenu, false);
             }
         }
     }

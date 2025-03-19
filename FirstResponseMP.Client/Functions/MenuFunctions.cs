@@ -13,21 +13,21 @@ namespace FirstResponseMP.Client.Functions
 {
     public class MenuFunctions : BaseScript
     {
-        public static void RestartMenu(UIMenu currentMenu)
+        public static void RestartUnitMenu(UIMenu currentMenu)
         {
             MenuHandler.CurrentMenu.Visible = false;
             MenuHandler.CloseAndClearHistory();
             Initial.Menus.CreateAll();
 
-            Initial.Menus.MainMenu.Menu().Visible = true;
+            Initial.Menus.UnitMainMenu.Menu().Visible = true;
 
             if (!currentMenu.Subtitle.Contains("Main Menu"))
             {
-                Initial.Menus.MainMenu.Menu().SwitchTo(Initial.Menus.ChangeRankOrNameMenu.Menu(), currentMenu.CurrentSelection, false, null);
+                Initial.Menus.UnitMainMenu.Menu().SwitchTo(Initial.Menus.UnitChangeRankOrNameMenu.Menu(), currentMenu.CurrentSelection, false, null);
             }
             else
             {
-                Initial.Menus.MainMenu.Menu().CurrentSelection = currentMenu.CurrentSelection;
+                Initial.Menus.UnitMainMenu.Menu().CurrentSelection = currentMenu.CurrentSelection;
             }
         }
     }

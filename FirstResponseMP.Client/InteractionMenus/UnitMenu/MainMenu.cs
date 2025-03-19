@@ -9,17 +9,16 @@ using CitizenFX.Core;
 using CitizenFX.Core.Native;
 
 using FirstResponseMP.Client.Functions;
-using FirstResponseMP.Client.MenuItems;
-using FirstResponseMP.Client.Menus.Custom;
+using FirstResponseMP.Client.InteractionMenus.Custom;
 using FirstResponseMP.Shared.Enums;
 
 using ScaleformUI;
 using ScaleformUI.Elements;
 using ScaleformUI.Menu;
 
-namespace FirstResponseMP.Client.Menus
+namespace FirstResponseMP.Client.InteractionMenus.UnitMenu
 {
-    public class MainMenu : MenuBase
+    public class MainMenu : MenuBaseFRMP
     {
         public override UIMenu menu { get; set; }
 
@@ -54,7 +53,7 @@ namespace FirstResponseMP.Client.Menus
 
             changeRankOrName.Activated += (sender, i) =>
             {
-                sender.SwitchTo(Initial.Menus.ChangeRankOrNameMenu.Menu(), inheritOldMenuParams: true);
+                sender.SwitchTo(Initial.Menus.UnitChangeRankOrNameMenu.Menu(), inheritOldMenuParams: true);
             };
 
             menu.OnListSelect += (sender, item, itemIndex) =>
@@ -65,7 +64,7 @@ namespace FirstResponseMP.Client.Menus
                     UnitFunctions.SetPlayerUnitStatus(status);
                     UnitFunctions.UpdatePlayerUnitObject();
 
-                    MenuFunctions.RestartMenu(sender);
+                    MenuFunctions.RestartUnitMenu(sender);
                 }
                 else if (item == changeDivision)
                 {
@@ -75,7 +74,7 @@ namespace FirstResponseMP.Client.Menus
                     UnitFunctions.SetPlayerUnitDivision(division);
                     UnitFunctions.UpdatePlayerUnitObject();
 
-                    MenuFunctions.RestartMenu(sender);
+                    MenuFunctions.RestartUnitMenu(sender);
                 }
             };
         }

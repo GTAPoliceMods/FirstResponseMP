@@ -9,9 +9,9 @@ using CitizenFX.Core;
 
 using ScaleformUI.Menu;
 
-namespace FirstResponseMP.Client.Menus.Custom
+namespace FirstResponseMP.Client.InteractionMenus.Custom
 {
-    public abstract class MenuBase : ScaleformUI.Menus.MenuBase
+    public abstract class MenuBaseFRMP : ScaleformUI.Menus.MenuBase
     {
         public abstract UIMenu menu { get; set; }
 

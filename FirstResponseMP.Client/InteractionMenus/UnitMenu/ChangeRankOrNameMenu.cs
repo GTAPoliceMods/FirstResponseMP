@@ -5,16 +5,15 @@ using System.Text;
 using System.Threading.Tasks;
 
 using FirstResponseMP.Client.Functions;
-using FirstResponseMP.Client.MenuItems;
-using FirstResponseMP.Client.Menus.Custom;
+using FirstResponseMP.Client.InteractionMenus.Custom;
 using FirstResponseMP.Shared.Enums;
 
 using ScaleformUI;
 using ScaleformUI.Menu;
 
-namespace FirstResponseMP.Client.Menus
+namespace FirstResponseMP.Client.InteractionMenus.UnitMenu
 {
-    public class ChangeRankOrNameMenu : MenuBase
+    public class ChangeRankOrNameMenu : MenuBaseFRMP
     {
         public override UIMenu menu { get; set; }
 
@@ -53,7 +52,7 @@ namespace FirstResponseMP.Client.Menus
                     UnitFunctions.SetPlayerUnitRank(rank);
                     UnitFunctions.UpdatePlayerUnitObject();
 
-                    MenuFunctions.RestartMenu(sender);
+                    MenuFunctions.RestartUnitMenu(sender);
                 }
                 else if (item == changeUnitName)
                 {
@@ -68,7 +67,7 @@ namespace FirstResponseMP.Client.Menus
                         UnitFunctions.SetPlayerUnitName();
                         UnitFunctions.UpdatePlayerUnitObject();
 
-                        MenuFunctions.RestartMenu(sender);
+                        MenuFunctions.RestartUnitMenu(sender);
                     }
                 }
             };
@@ -83,7 +82,7 @@ namespace FirstResponseMP.Client.Menus
                 UnitFunctions.SetPlayerUnitName(customName);
                 UnitFunctions.UpdatePlayerUnitObject();
 
-                MenuFunctions.RestartMenu(sender);
+                MenuFunctions.RestartUnitMenu(sender);
             }
             else
             {

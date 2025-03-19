@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 using ScaleformUI.Menu;
 
-namespace FirstResponseMP.Client.MenuItems
+namespace FirstResponseMP.Client.InteractionMenus.Custom
 {
     public class MenuHead
     {

@@ -6,13 +6,12 @@ using System.Threading.Tasks;
 
 using CitizenFX.Core;
 using CitizenFX.Core.Native;
-using FirstResponseMP.Client.Menus;
 
 namespace FirstResponseMP.Client.Functions
 {
     public class CommandInputs : BaseScript
     {
-        public static InputArgument ToggleMenuCommand = new Action<int, List<object>, string>((source, args, rawCommand) =>
+        public static InputArgument ToggleToggleUnitMenu = new Action<int, List<object>, string>((source, args, rawCommand) =>
         {
             if (ScaleformUI.MenuHandler.CurrentMenu != null)
             {
@@ -20,7 +19,7 @@ namespace FirstResponseMP.Client.Functions
             }
             else
             {
-                Initial.Menus.MainMenu.Menu().Visible = true;
+                Initial.Menus.UnitMainMenu.Menu().Visible = true;
             }
         });
     }
