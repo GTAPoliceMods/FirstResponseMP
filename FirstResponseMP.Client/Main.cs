@@ -8,11 +8,7 @@ using CitizenFX.Core;
 using CitizenFX.Core.Native;
 
 using FirstResponseMP.Client.Functions;
-using FirstResponseMP.Client.Menus;
 using FirstResponseMP.Shared.Enums;
-using FirstResponseMP.Shared.Objects;
-
-using ScaleformUI.Menu;
 
 namespace FirstResponseMP.Client
 {

@@ -43,6 +43,9 @@ namespace FirstResponseMP.Server.Internal
             connection.Security.AllowUnstrustedCertificate = true;
             connection.Security.AllowNameMismatchCertificate = true;
 
+            connection.EnableAutoSendPing = true;
+            connection.AutoSendPingInterval = 30;
+
             StartServer();
 
             async void StartServer()
@@ -58,7 +61,7 @@ namespace FirstResponseMP.Server.Internal
                 }
                 catch (Exception ex)
                 {
-                    Debug.WriteLine($"Error during stats websocket connection: {ex.Message}");
+                    Debug.WriteLine($"Error during stats WebSocket connection: {ex.Message}");
                 }
             }
 
@@ -76,7 +79,8 @@ namespace FirstResponseMP.Server.Internal
 
                 connection.Closed += (sender, e) =>
                 {
-                    Debug.WriteLine("Stats WebSocket connection closed.");
+                    Debug.WriteLine("Stats WebSocket connection closed. Reconnecting...");
+                    StartServer();
                 };
             }
         }
@@ -85,13 +89,11 @@ namespace FirstResponseMP.Server.Internal
         {
             await Task.Delay(0);
 
-            Debug.WriteLine("Statistics requested.");
-
             try
             {
                 ServerStats stats = new ServerStats
                 {
-                    //ResourceVersion = GetResourceMetadata(GetCurrentResourceName(), "version", 0),
+                    //ResourceVersion = GetResourceMetadata(GetCurrentResourceName(), "version", 0), // Errors out, not sure why
                     ResourceVersion = "1.0.0",
                     OnlinePlayers = new OnlinePlayers
                     {
@@ -105,18 +107,13 @@ namespace FirstResponseMP.Server.Internal
                     }
                 };
 
-                Debug.WriteLine("Statistics object created.");
-
                 var statsJson = Newtonsoft.Json.JsonConvert.SerializeObject(stats);
 
-                Debug.WriteLine("Statistics object stringified.");
-
                 connection.Send($"sendServerStats({statsJson});");
-                Debug.WriteLine("Statistics sent.");
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"Something happened while sending Statistics.\n{ex.Message}");
+                Debug.WriteLine($"Something happened in the WebSocket while sending the statistics.\n{ex.Message}");
             }
         }
     }

@@ -18,15 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="assets\statistics_temp.png" />
-    <None Remove="assets\trebuc.ttf" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="assets\statistics_temp.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="assets\trebuc.ttf">
+    <Content Include="assets\*">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

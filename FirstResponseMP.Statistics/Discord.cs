@@ -12,6 +12,9 @@ using System.Threading;
 using SixLabors.ImageSharp.Drawing.Processing;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Processing;
+using SixLabors.ImageSharp.Formats;
+using System.Numerics;
+using SixLabors.ImageSharp.Drawing;
 
 namespace FirstResponseMP.Statistics
 {
@@ -89,7 +92,10 @@ namespace FirstResponseMP.Statistics
             var statsData = StatisticsStore.GetStatistics();
             var allOnDutyPlayers = statsData.TotalPolice + statsData.TotalFire + statsData.TotalMedical;
 
+            var demoNumber = FormatNumber(100);
+
             Font font = fontFam.CreateFont(40, FontStyle.Regular);
+            Font fontSm = fontFam.CreateFont(35, FontStyle.Regular);
 
             using (Image statsImage = Image.Load(File.OpenRead("./assets/statistics_temp.png")))
             {
@@ -102,6 +108,11 @@ namespace FirstResponseMP.Statistics
                     Font = font
                 };
 
+                RichTextOptions onDutyOptions = new(options)
+                {
+                    Font = fontSm
+                };
+
                 RichTextOptions usingResourceCountText = new(options)
                 {
                     Origin = new PointF(statsImage.Width / 2, statsImage.Height / 3f),
@@ -112,16 +123,53 @@ namespace FirstResponseMP.Statistics
                     Origin = new PointF(statsImage.Width / 2, statsImage.Height / 2f),
                 };
 
-                RichTextOptions onDutyPlayersText = new(options)
+                RichTextOptions onDutyPoliceText = new(onDutyOptions)
                 {
-                    Origin = new PointF(statsImage.Width / 2, statsImage.Height / 1.5f),
+                    Origin = new PointF(statsImage.Width / 2 - 150, statsImage.Height / 1.1f),
                 };
+
+                RichTextOptions onDutyFireText = new(onDutyOptions)
+                {
+                    Origin = new PointF(statsImage.Width / 2, statsImage.Height / 1.1f),
+                };
+
+                RichTextOptions onDutyMedicalText = new(onDutyOptions)
+                {
+                    Origin = new PointF(statsImage.Width / 2 + 150, statsImage.Height / 1.1f),
+                };
+
+                using Image polImage = Image.Load(File.OpenRead("./assets/icon_pol.png"));
+                polImage.Configuration.SetShapeOptions(e =>
+                {
+                    e.ClippingOperation = ClippingOperation.None;
+                });
+
+                using Image fireImage = Image.Load(File.OpenRead("./assets/icon_fire.png"));
+                fireImage.Configuration.SetShapeOptions(e =>
+                {
+                    e.ClippingOperation = ClippingOperation.None;
+                });
+
+                using Image emsImage = Image.Load(File.OpenRead("./assets/icon_ems.png"));
+                emsImage.Configuration.SetShapeOptions(e =>
+                {
+                    e.ClippingOperation = ClippingOperation.None;
+                });
+                
 
                 statsImage.Mutate(x =>
                 {
-                    x.DrawText(usingResourceCountText, $"{statsData.TotalServers} servers online", Brushes.Solid(Color.White));
-                    x.DrawText(onlinePlayersText, $"{statsData.TotalPlayers} players online", Brushes.Solid(Color.White));
-                    x.DrawText(onDutyPlayersText, $"{allOnDutyPlayers} players on duty", Brushes.Solid(Color.White));
+                    x.DrawText(usingResourceCountText, $"{FormatNumber(statsData.TotalServers)} servers online", Brushes.Solid(Color.White));
+                    x.DrawText(onlinePlayersText, $"{FormatNumber(statsData.TotalPlayers)} players online", Brushes.Solid(Color.White));
+
+                    x.DrawImage(polImage, backgroundLocation: (Point)new PointF(statsImage.Width / 2.13f - 150, statsImage.Height / 1.6f), 1);
+                    x.DrawText(onDutyPoliceText, $"{FormatNumber(statsData.TotalPolice)}", Brushes.Solid(Color.White));
+
+                    x.DrawImage(fireImage, backgroundLocation: (Point)new PointF(statsImage.Width / 2.13f, statsImage.Height / 1.52f), 1);
+                    x.DrawText(onDutyFireText, $"{FormatNumber(statsData.TotalFire)}", Brushes.Solid(Color.White));
+
+                    x.DrawImage(emsImage, backgroundLocation: (Point)new PointF(statsImage.Width / 2.13f + 150, statsImage.Height / 1.52f), 1);
+                    x.DrawText(onDutyMedicalText, $"{FormatNumber(statsData.TotalMedical)}", Brushes.Solid(Color.White));
                 });
 
                 FileStream saveAs = File.OpenWrite("./assets/statistics.png");
@@ -133,8 +181,23 @@ namespace FirstResponseMP.Statistics
                 FileStream imageOut = File.OpenRead("./assets/statistics.png");
 
                 return imageOut;
-            }
-            ;
+            };
+        }
+
+        private static string FormatNumber(long num)
+        {
+            // Ensure number has max 3 significant digits (no rounding up can happen)
+            long i = (long)Math.Pow(10, (int)Math.Max(0, Math.Log10(num) - 2));
+            num = num / i * i;
+
+            if (num >= 1000000000)
+                return (num / 1000000000D).ToString("0.##") + "B";
+            if (num >= 1000000)
+                return (num / 1000000D).ToString("0.##") + "M";
+            if (num >= 1000)
+                return (num / 1000D).ToString("0.##") + "K";
+
+            return num.ToString("#,0");
         }
     }
 }

@@ -37,6 +37,8 @@ namespace FirstResponseMP.Client.Functions
             public static MenuBaseFRMP UnitChangeRankOrNameMenu = null;
             public static MenuBaseFRMP UnitMainMenu = null;
 
+            public static RadialMenuBaseFRMP PedMainMenu = null;
+
             public static void CreateAll()
             {
                 // Unit Menu //
@@ -44,6 +46,7 @@ namespace FirstResponseMP.Client.Functions
                 UnitMainMenu = new InteractionMenus.UnitMenu.MainMenu();
 
                 // Ped Radial Menu //
+                PedMainMenu = new InteractionMenus.PedInteractionMenu.MainMenu();
             }
         }
 
@@ -51,8 +54,16 @@ namespace FirstResponseMP.Client.Functions
         {
             public static void RegisterAll()
             {
-                API.RegisterKeyMapping("frmp_core:ToggleUnitMenu", "Toggle FRMP Menu", "keyboard", "F11");
+                // MENU INTERACTIONS //
+                API.RegisterKeyMapping("frmp_core:ToggleUnitMenu", "Toggle Unit Menu", "keyboard", "F11");
                 API.RegisterCommand("frmp_core:ToggleUnitMenu", CommandInputs.ToggleToggleUnitMenu, false);
+
+                API.RegisterKeyMapping("frmp_core:TogglePedInteractionMenu", "Toggle Ped Interaction menu", "keyboard", "N");
+                API.RegisterCommand("frmp_core:TogglePedInteractionMenu", CommandInputs.TogglePedInteractionMenu, false);
+
+                // PED INTERACTIONS //
+                API.RegisterKeyMapping("frmp_core:InteractWithPed", "Interact with Ped", "keyboard", "E");
+                //API.RegisterCommand("frmp_core:InteractWithPed", CommandInputs.InteractWithPed, false);
             }
         }
     }
