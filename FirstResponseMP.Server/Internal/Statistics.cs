@@ -55,13 +55,11 @@ namespace FirstResponseMP.Server.Internal
                 try
                 {
                     connection.Open();
-                    Debug.WriteLine("Stats WebSocket connection established.");
-
                     StartRecieving();
                 }
                 catch (Exception ex)
                 {
-                    Debug.WriteLine($"Error during stats WebSocket connection: {ex.Message}");
+                    
                 }
             }
 
@@ -69,6 +67,8 @@ namespace FirstResponseMP.Server.Internal
             {
                 connection.MessageReceived += async (sender, e) =>
                 {
+                    await Task.Delay(0);
+
                     var message = e.Message;
 
                     if (message == "pingStatsRequest")
@@ -77,9 +77,17 @@ namespace FirstResponseMP.Server.Internal
                     }
                 };
 
-                connection.Closed += (sender, e) =>
+                connection.Opened += async (sender, e) =>
                 {
-                    Debug.WriteLine("Stats WebSocket connection closed. Reconnecting...");
+                    await Task.Delay(0);
+
+                    Debug.WriteLine("Stats WebSocket connection established.");
+                };
+
+                connection.Closed += async (sender, e) =>
+                {
+                    await Task.Delay(5000);
+
                     StartServer();
                 };
             }

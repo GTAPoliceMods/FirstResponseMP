@@ -26,30 +26,6 @@ namespace FirstResponseMP.Statistics.Controllers
         [Auth]
         public async Task Get()
         {
-            if (!HttpContext.Request.Headers.ContainsKey("Authorization") || string.IsNullOrWhiteSpace(HttpContext.Request.Headers["Authorization"]))
-            {
-                HttpContext.Response.StatusCode = StatusCodes.Status401Unauthorized;
-                await HttpContext.Response.WriteAsync("Invalid authorization header");
-                HttpContext.Abort();
-                return;
-            }
-
-            if (HttpContext.Request.Headers["Authorization"] != "McLeakingItHasGoneOofBecauseHeMadAtMeSadface")
-            {
-                HttpContext.Response.StatusCode = StatusCodes.Status401Unauthorized;
-                await HttpContext.Response.WriteAsync("Invalid authorization header");
-                HttpContext.Abort();
-                return;
-            }
-
-            if (!HttpContext.WebSockets.IsWebSocketRequest)
-            {
-                HttpContext.Response.StatusCode = StatusCodes.Status400BadRequest;
-                await HttpContext.Response.WriteAsync("This endpoint only supports WebSocket requests.");
-                HttpContext.Abort();
-                return;
-            }
-
             string connectionId = Guid.NewGuid().ToString();
 
             using var webSocket = await HttpContext.WebSockets.AcceptWebSocketAsync();
@@ -63,44 +39,51 @@ namespace FirstResponseMP.Statistics.Controllers
 
             while (webSocket.State == WebSocketState.Open)
             {
-                var receiveResult = await webSocket.ReceiveAsync(
+                try
+                {
+                    var receiveResult = await webSocket.ReceiveAsync(
                     new ArraySegment<byte>(buffer), CancellationToken.None);
 
-                if (receiveResult.MessageType == WebSocketMessageType.Close)
-                {
-                    ConnectionManager.RemoveConnection(ConnectionId);
-                    StatisticsStore.RemoveStats(ConnectionId);
-                    await webSocket.CloseAsync(receiveResult.CloseStatus.Value, receiveResult.CloseStatusDescription, CancellationToken.None);
-                    return;
-                }
-
-                var message = Encoding.UTF8.GetString(buffer, 0, receiveResult.Count);
-
-                if (message.StartsWith("sendServerStats"))
-                {
-                    var data = message.Replace("sendServerStats(", "").Replace(");", "");
-
-                    try
+                    if (receiveResult.MessageType == WebSocketMessageType.Close)
                     {
-                        ServerStats stats = JsonConvert.DeserializeObject<ServerStats>(data);
+                        ConnectionManager.RemoveConnection(ConnectionId);
+                        StatisticsStore.RemoveStats(ConnectionId);
+                        await webSocket.CloseAsync(receiveResult.CloseStatus.Value, receiveResult.CloseStatusDescription, CancellationToken.None);
+                        return;
+                    }
 
-                        StatisticsStore.UpdateStats(ConnectionId, stats);
+                    var message = Encoding.UTF8.GetString(buffer, 0, receiveResult.Count);
 
-                        var response = Encoding.UTF8.GetBytes("Sent statistics!");
+                    if (message.StartsWith("sendServerStats"))
+                    {
+                        var data = message.Replace("sendServerStats(", "").Replace(");", "");
 
+                        try
+                        {
+                            ServerStats stats = JsonConvert.DeserializeObject<ServerStats>(data);
+
+                            StatisticsStore.UpdateStats(ConnectionId, stats);
+
+                            var response = Encoding.UTF8.GetBytes("Sent statistics!");
+
+                            await webSocket.SendAsync(new ArraySegment<byte>(response), WebSocketMessageType.Text, true, CancellationToken.None);
+                        }
+                        catch (Exception ex)
+                        {
+                            var response = Encoding.UTF8.GetBytes($"{{ \"error\": \"Error parsing statistics\" }}");
+                            await webSocket.SendAsync(new ArraySegment<byte>(response), WebSocketMessageType.Text, true, CancellationToken.None);
+                            continue;
+                        }
+                    }
+                    else
+                    {
+                        var response = Encoding.UTF8.GetBytes($"{{ \"error\": \"Unknown Message `{message}`\" }}");
                         await webSocket.SendAsync(new ArraySegment<byte>(response), WebSocketMessageType.Text, true, CancellationToken.None);
                     }
-                    catch (Exception ex)
-                    {
-                        var response = Encoding.UTF8.GetBytes($"{{ \"error\": \"Error parsing statistics\" }}");
-                        await webSocket.SendAsync(new ArraySegment<byte>(response), WebSocketMessageType.Text, true, CancellationToken.None);
-                        continue;
-                    }
                 }
-                else
+                catch(Exception ex)
                 {
-                    var response = Encoding.UTF8.GetBytes($"{{ \"error\": \"Unknown Message `{message}`\" }}");
-                    await webSocket.SendAsync(new ArraySegment<byte>(response), WebSocketMessageType.Text, true, CancellationToken.None);
+                    Console.WriteLine(ex.Message);
                 }
             }
         }

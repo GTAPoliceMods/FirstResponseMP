@@ -8,11 +8,24 @@ using CitizenFX.Core;
 
 using ScaleformUI;
 using ScaleformUI.Menu;
+using ScaleformUI.Menus;
 
 namespace FirstResponseMP.Client.Functions
 {
     public class MenuFunctions : BaseScript
     {
+        public static void ToggleMenu(MenuBase menu)
+        {
+            if (MenuHandler.CurrentMenu != null)
+            {
+                MenuHandler.CurrentMenu.Visible = !MenuHandler.CurrentMenu.Visible;
+            }
+            else
+            {
+                menu.Visible = true;
+            }
+        }
+
         public static void RestartUnitMenu(UIMenu currentMenu)
         {
             MenuHandler.CurrentMenu.Visible = false;

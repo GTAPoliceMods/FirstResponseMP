@@ -10,6 +10,8 @@
     <OutputPath>../FirstResponseMP.Build/frmp_core/FirstResponseMP.Server/</OutputPath>
     <Configurations>Release</Configurations>
     <Platforms>x64</Platforms>
+    <LangVersion>13.0</LangVersion>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
     <Content Include="Static\**\*">

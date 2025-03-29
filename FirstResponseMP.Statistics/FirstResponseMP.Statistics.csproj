@@ -9,6 +9,8 @@
     <OutputPath>../FirstResponseMP.Build/FRMP Statistics Server/</OutputPath>
     <Configurations>Release</Configurations>
     <Platforms>x64</Platforms>
+    <LangVersion>13.0</LangVersion>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
