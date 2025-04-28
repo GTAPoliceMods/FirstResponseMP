@@ -9,12 +9,4 @@ public interface IPedData
     public string FullName { get; }
 
     public List<string> Warrants { get; }
-
-    public void Regenerate();
- 
-    public void RegenerateWarrants();
-    
-    public string ToDataString();
-    
-    public object ToObject();
 }
