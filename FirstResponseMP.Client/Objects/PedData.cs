@@ -1,10 +1,12 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using FirstResponseMP.Shared.Interfaces;
 
-namespace FirstResponseMP.Shared.Objects;
+namespace FirstResponseMP.Client.Objects;
+// TODO?: Replicate for server
 
-public class PedData(string firstName, string lastName)
+public class PedData(string firstName, string lastName) : IPedData
 {
     public string FirstName { get; } = firstName;
     public string LastName { get; } = lastName;

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using CitizenFX.Core;
 using FirstResponseMP.Shared.Objects;
+using PedData = FirstResponseMP.Client.Objects.PedData;
 
 namespace FirstResponseMP.Client.Functions;
 
