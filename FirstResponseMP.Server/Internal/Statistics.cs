@@ -95,14 +95,14 @@ namespace FirstResponseMP.Server.Internal
 
         public async Task OnStatisticsRequest()
         {
-            await Task.Delay(0);
+            await Delay(0);
 
             try
             {
                 ServerStats stats = new ServerStats
                 {
-                    //ResourceVersion = GetResourceMetadata(GetCurrentResourceName(), "version", 0), // Errors out, not sure why
-                    ResourceVersion = "1.0.0",
+                    ResourceVersion = GetResourceMetadata(GetCurrentResourceName(), "version", 0),
+                    //ResourceVersion = "1.0.0",
                     OnlinePlayers = new OnlinePlayers
                     {
                         Total = Players.ToList().Count,
