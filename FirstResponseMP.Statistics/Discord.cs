@@ -32,7 +32,7 @@ namespace FirstResponseMP.Statistics
             {
                 Intents = DiscordIntents.All,
                 AutoReconnect = true,
-                Token = "MTM0NDUwNzU0ODIyNDQ1ODg1NA.GVp6Dw.EtTBVPh21VszIFVe8CdfEEM2DoIlQYVlXhO81A",
+                Token = "",
             });
 
             await discordClient.ConnectAsync();
